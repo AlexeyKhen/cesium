@@ -1,13 +1,12 @@
-import { Viewer, Entity } from "resium";
-import Files3D from "./components/Files3D";
+import Map3D from "./components/Map3D/Map3D";
+
+
 function App() {
-  return (
-    <div className="App">
-      <Viewer>
-        <Files3D />
-      </Viewer>
-    </div>
-  );
+    return (
+        <div className="App">
+            <Map3D/>
+        </div>
+    );
 }
 
 export default App;
