@@ -55,7 +55,7 @@ function Map3D() {
                     animation={false}
                     style={{height: 'calc(100vh)'}}
                 >
-                    {/*<Load3DModels/>*/}
+                    <Load3DModels/>
                 </ViewerResium>
             </div>
         </>
