@@ -42,7 +42,7 @@ export default function Load3DModels() {
 
     return <Cesium3DTileset
         modelMatrix={Matrix4.fromTranslation(matrix)}
-        maximumScreenSpaceError={0}
+        maximumScreenSpaceError={8}
         ref={ref}
         url={'assets/sector107/Cesium_107_1_Cesium.json'}/>
 }
