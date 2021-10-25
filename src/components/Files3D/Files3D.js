@@ -4,45 +4,22 @@ import {Cesium3DTileset} from "resium";
 import {Matrix4, Cartographic, Cartesian3} from "cesium";
 
 
-export default function Load3DModels() {
+export default function Load3DModels({city}) {
     const ref = useRef(null);
-    const [matrix, setMatrix] = useState(null);
+    const urls = {
+        astana: 'assets/astana/Cesium_107_1_Cesium.json',
+        almaty: 'assets/almaty/Alm_Sector5_Cesium.json'
+    }
 
+    const matrixCity = {
+        astana: new Cartesian3(-64.05935763055459, -190.50901036104187, -249.00344509910792),
+        almaty: new Cartesian3(-140.00766026158817, - 603.47667964641, -561.9911959739402)
+    }
 
-    useEffect(() => {
-        if (ref.current && ref.current.cesiumElement !== null) {
-            let offsetTile = ref.current.cesiumElement;
-            let heightOffset = -320;
-
-
-            offsetTile.readyPromise.then((tilest) => {
-                let boundingSphere = tilest.boundingSphere;
-                let cartographic = Cartographic.fromCartesian(boundingSphere.center);
-                let surface = Cartesian3.fromRadians(
-                    cartographic.longitude,
-                    cartographic.latitude,
-                    0.0
-                );
-                let offset = Cartesian3.fromRadians(
-                    cartographic.longitude,
-                    cartographic.latitude,
-                    heightOffset
-                );
-                let translation = Cartesian3.subtract(
-                    offset,
-                    surface,
-                    new Cartesian3()
-                );
-                setMatrix(translation);
-            });
-        }
-
-
-    }, []);
 
     return <Cesium3DTileset
-        modelMatrix={Matrix4.fromTranslation(matrix)}
-        maximumScreenSpaceError={8}
+        modelMatrix={Matrix4.fromTranslation(matrixCity[city])}
+        maximumScreenSpaceError={1}
         ref={ref}
-        url={'assets/sector107/Cesium_107_1_Cesium.json'}/>
+        url={urls[city]}/>
 }
