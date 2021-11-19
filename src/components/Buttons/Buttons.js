@@ -6,10 +6,6 @@ function Buttons({city, setCity}) {
         astana: 'Нур-Султан',
         almaty: "Алматы"
     }
-    const buttons = [
-
-        <Button key="two" variant="outlined" style={{backgroundColor: "white"}}>Алматы</Button>,
-    ];
 
     const cities = ['astana', 'almaty']
     return (
