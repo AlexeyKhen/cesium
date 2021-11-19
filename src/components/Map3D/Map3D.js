@@ -4,17 +4,21 @@ import {Cartesian3, OpenStreetMapImageryProvider} from "cesium";
 import Load3DModels from "../Files3D/Files3D";
 import Loading from "../Loading/Loading";
 import Buttons from "../Buttons/Buttons";
+import {useLocation} from "react-router-dom";
 
 function Map3D() {
     const [isLoading, setLoading] = useState(true)
-    const [city, setCity] = useState('almaty')
+    const [city, setCity] = useState('astana')
+    const [model, setModel] = useState('full_3')
+    const [quality, setQuality] = useState(1)
     const [viewerConst, setViewerConst] = useState(null)
     const [firstTimeRendered, setFirstTimeRendered] = useState(false)
     const ref = useRef(null);
+    let location = useLocation();
 
 
     const homeCoordinates = {
-        astana: [71.416167, 51.089247],
+        astana: [71.461552, 51.151072],
         almaty: [76.933226, 43.212292]
     }
 
@@ -28,7 +32,7 @@ function Map3D() {
                 destination: Cartesian3.fromDegrees(
                     homeCoordinates[city][0],
                     homeCoordinates[city][1],
-                    600
+                    1000
                 ),
             })
             viewer.scene.skyBox.show = false;
@@ -61,6 +65,21 @@ function Map3D() {
 
     }, [city])
 
+    useEffect(() => {
+        try {
+            const lols = location.pathname.split('/')
+            if (['full_3', 'full_7', 'cut_3', 'cut_7'].includes(lols[1])) {
+                setModel(lols[1])
+            }
+            if ([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16].includes(parseInt(lols[2]))) {
+                setQuality(parseInt(lols[2]))
+            }
+        } catch (err) {
+            console.log(err)
+        }
+
+    }, [])
+
 
     return (
         <>
@@ -85,7 +104,7 @@ function Map3D() {
                     animation={false}
                     style={{height: 'calc(100vh)'}}
                 >
-                    <Load3DModels city={city}/>
+                    <Load3DModels city={model} quality={quality}/>
                 </ViewerResium>
             </div>
         </>
